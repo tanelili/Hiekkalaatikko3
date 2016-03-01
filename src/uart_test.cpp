@@ -135,9 +135,11 @@ int main(void)
     Board_Init();
     // Set the LED to the state of "On"
     Board_LED_Set(0, true);
+
 #endif
 #endif
-	ModbusMaster node(2); // Create modbus object that connects to slave id 2
+/*
+    ModbusMaster node(2); // Create modbus object that connects to slave id 2
 
 		node.begin(9600); // set transmission rate - other parameters are set inside the object and can't be changed here
 
@@ -166,17 +168,19 @@ int main(void)
 		int i = 0;
 		int j = 0;
 		const uint16_t fa[20] = { 1000, 2000, 3000, 3500, 4000, 5000, 7000, 8000, 8300, 10000, 10000, 9000, 8000, 7000, 6000, 5000, 4000, 3000, 2000, 1000 };
-
+*/
 		while (1) {
-			uint8_t result;
+			Board_LED_Toggle(0);
+			//uint8_t result;
 
 			// slave: read (2) 16-bit registers starting at register 102 to RX buffer
-			j = 0;
-			do {
+			//j = 0;
+			/*do {
 				result = node.readHoldingRegisters(102, 2);
 				j++;
 			} while(j < 3 && result != node.ku8MBSuccess);
-			// note: sometimes we don't succeed on first read so we try up to threee times
+
+			// note: sometimes we don't succeed on first read so we try up to three times
 			// if read is successful print frequency and current (scaled values)
 			if (result == node.ku8MBSuccess) {
 				printf("F=%4d, I=%4d  (ctr=%d)\n", node.getResponseBuffer(0), node.getResponseBuffer(1),j);
@@ -184,15 +188,15 @@ int main(void)
 			else {
 				printf("ctr=%d\n",j);
 			}
-
+			*/
 			Sleep(3000);
-			i++;
-			if(i >= 20) {
-				i=0;
-			}
+			//i++;
+			//if(i >= 20) {
+			//	i=0;
+			//}
 			// frequency is scaled:
 			// 20000 = 50 Hz, 0 = 0 Hz, linear scale 400 units/Hz
-			setFrequency(node, fa[i]);
+			//setFrequency(node, fa[i]);
 		}
 
 		return 0;
